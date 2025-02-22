@@ -10,7 +10,15 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://taskmanagement-ed7d8.web.app",
+      "https://taskmanagement-ed7d8.firebaseapp.com",
+    ],
+  })
+);
 app.use(express.json());
 app.use(morgan("dev"));
 
@@ -32,7 +40,7 @@ const io = new Server(server, {
 
 async function run() {
   try {
-    await client.connect();
+    // await client.connect();
     const db = client.db("taskManagement");
     const taskCollection = db.collection("tasks");
 
